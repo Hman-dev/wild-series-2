@@ -15,6 +15,7 @@ class CategoryFixtures extends Fixture
         'Fantatisque',
         'Horreur',
     ];
+
     public function load(ObjectManager $manager)
     {
         // $category = new Category();
@@ -25,14 +26,17 @@ class CategoryFixtures extends Fixture
     // for ($i = 1; $i <= 50; $i++) {  
     //     $category = new Category();  
     //     $category->setName('Nom de catégorie ' . $i);  
-    //     $manager->persist($category);  
+    //     $manager->persist($category); prends en compte l'objet $category qui
+    // a été instancié
     // }  
-    // $manager->flush();
+    // $manager->flush(); la méthode flush()qui permet d'executer toutes les reqêutes
+    // SQL necessaires
 
-    foreach (self::CATEGORIES as $keys=>$categoryName) {  
+    foreach (self::CATEGORIES as $categoryName) {  
         $category = new Category();  
         $category->setName($categoryName);  
-        $manager->persist($category);  
+        $manager->persist($category);
+        $this->addReference('category_' . $categoryName, $category); 
     }  
     $manager->flush();
 
