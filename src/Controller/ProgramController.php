@@ -11,38 +11,38 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
 {
-    
-    #[Route('/', name:'index')]
+
+    #[Route('/', name: 'index')]
     public function index(ProgramRepository $programRepository): Response
     {
         // return $this->render('program/index.html.twig', [
-
         //     'website' => 'Wild Series',
-     
         //  ]);
         $programs = $programRepository->findAll();
 
-         return $this->render('program/index.html.twig', [
+        return $this->render('program/index.html.twig', [
 
             'programs' => $programs,
-     
-         ]);
-        }
 
-    #[Route('/{id<\d+>}', methods: ['GET'], name: 'id')]
-    public function show(int $id): Response
-    {
-        if ($id != (int)$id) 
-        {
-           
-            return $this->redirectToRoute("HTTP/1.1 404 Not Found");
-        }
-        
-    return $this->render('program/show.html.twig', [
-        
-            'list' => $id,
-     
-         ]);
+        ]);
     }
 
+    #[Route('/{id<\d+>}', methods: ['GET'], name: 'show')]
+    public function show(int $id, ProgramRepository $programRepository): Response
+    {
+        $programm = $programRepository->findOneBy(['id'=>$id]);
+        if (!$programm) {
+
+            // return $this->redirectToRoute("HTTP/1.1 404 Not Found");
+            throw $this->createNotFoundException(
+                'No prgram with id : '.$id.' found in program\'s table.'
+            );
+        }
+
+        return $this->render('program/show.html.twig', [
+
+            'program' => $programm,
+
+        ]);
+    }
 }
