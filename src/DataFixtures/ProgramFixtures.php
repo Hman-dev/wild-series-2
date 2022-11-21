@@ -19,6 +19,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     ];
     public function load(ObjectManager $manager): void
     {
+        $numberOfCategories= count(CategoryFixtures::CATEGORIES);
         foreach (self::PROGRAM as $ProgramName=>$SynopsisName ) 
         {
             # code...
@@ -26,7 +27,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program = new Program();
             $program->setTitle($ProgramName);
             $program->setSynopsis($SynopsisName);
-            $program->setCategory($this->getReference('category_Horreur'));
+            $program->setCategory($this->getReference('category_'.CategoryFixtures::CATEGORIES[rand(0,$numberOfCategories-1)]));
             $manager->persist($program);
         }
 
