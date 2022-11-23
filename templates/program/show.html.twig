@@ -19,6 +19,24 @@
 			<p>Catégorie :
 				{{ program.category.name }}</p>
 
+				<p>Le nombre de saison contenu dans la serie :
+					</p>
+			{% for season in seasons %}
+				<ul>
+				<li>Saison{{season.number}} Description: {{season.description}} </li>
+				</ul>
+				<a href="/program/{{program.Id}}/season/{{season.Id}}">Voir les épisodes</a>
+				{# <a href="{{} path('program_season_show', { programId: program.id, seasonId: season.id }) }}"> #}
+			En savoir plus la saison
+			{{ season.number }}
+		{# </a> #}
+			
+				{# <li><a href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">Saison {{ season.number }}</a></li> #}
+			{% endfor %}
+			{# <p>Catégorie :
+				{{seasons}}</p> #}
+			
+
 		</div>
 
 	</div>
